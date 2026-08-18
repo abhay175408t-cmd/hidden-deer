@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 700" preserveAspectRatio="xMidYMid slice">
+  <rect width="1920" height="700" fill="#151515"/>
+  <g transform="translate(480 660) scale(2.1)"><path fill="#F2F0EB" fill-opacity="0.88" d="M 416 490 Q 416 435 450 435 Q 484 435 484 490 Q 484 520 450 520 Q 416 520 416 490 Z"/><path fill="#F2F0EB" fill-opacity="0.88" d="M 380 532 L 520 532 L 538 700 L 502 704 L 480 632 L 480 1060 L 420 1060 L 420 632 L 398 704 L 362 700 Z"/><path stroke="#F2F0EB" stroke-opacity="0.4" stroke-width="5" d="M 450 532 L 450 1060"/></g>
+  <rect x="40" y="40" width="1840" height="620" fill="none" stroke="#F2F0EB" stroke-opacity="0.22" stroke-width="2"/>
+  <text x="980" y="268" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="30" letter-spacing="14" fill="#F2F0EB" fill-opacity="0.85">Last Chance</text>
+  <text x="980" y="392" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="128" letter-spacing="10" fill="#F2F0EB">UP TO 30% OFF</text>
+  <text x="980" y="470" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" letter-spacing="8" fill="#F2F0EB" fill-opacity="0.8">The season sale — ends soon</text>
+  <text x="70" y="120" font-family="Georgia, 'Times New Roman', serif" font-size="42" letter-spacing="14" fill="#F2F0EB" fill-opacity="0.9">DEER</text>
+</svg>

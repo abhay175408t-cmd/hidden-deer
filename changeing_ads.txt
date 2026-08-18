@@ -1,0 +1,359 @@
+Yes. In your current code, OpenCode has already separated these into **different files**, so later you can change the ads/images/content without rebuilding the whole homepage.
+
+Here is exactly where to look.
+
+---
+
+## 1. Sliding Ads / Moving Editorial Ads
+
+This is the **first moving advertisement strip** under the category navigation.
+
+### Main component
+
+```text
+src/components/customer/EditorialMarquee/
+```
+
+Inside:
+
+```text
+EditorialMarquee.jsx
+EditorialMarquee.css
+```
+
+### But if you want to CHANGE the actual ads
+
+Go here:
+
+```text
+src/data/homepageCampaigns.js
+```
+
+This contains:
+
+```text
+marqueeAds
+```
+
+So conceptually:
+
+```js
+marqueeAds = [
+   {
+      image: "...",
+      title: "...",
+      ...
+   },
+   ...
+]
+```
+
+### Therefore:
+
+**Animation/design →**
+
+```text
+src/components/customer/EditorialMarquee/EditorialMarquee.jsx
+src/components/customer/EditorialMarquee/EditorialMarquee.css
+```
+
+**Which ads are displayed →**
+
+```text
+src/data/homepageCampaigns.js
+```
+
+**Actual image files →**
+
+```text
+public/assets/home/campaigns/
+```
+
+So if tomorrow you want to replace:
+
+> Summer Collection
+
+with:
+
+> New Denim Drop
+
+you mainly change the campaign data + image.
+
+---
+
+# 2. Featured Categories
+
+This is the section:
+
+```text
+FEATURED CATEGORIES
+```
+
+with cards like:
+
+```text
+SHIRTS
+TROUSERS
+T-SHIRTS
+JEANS
+CARGOS
+...
+```
+
+### Main component
+
+```text
+src/components/customer/FeaturedCategories/
+```
+
+Inside:
+
+```text
+FeaturedCategories.jsx
+FeaturedCategories.css
+```
+
+### Category information
+
+Go here:
+
+```text
+src/data/featuredCategories.js
+```
+
+This is the important file for changing:
+
+* category name
+* slug
+* person image
+* product-only image
+* destination
+* badge
+
+### Actual category images
+
+Go here:
+
+```text
+public/assets/home/categories/
+```
+
+For example:
+
+```text
+shirts-person.webp
+shirts-product.webp
+
+jeans-person.webp
+jeans-product.webp
+
+trousers-person.webp
+trousers-product.webp
+```
+
+The two images are responsible for your special effect:
+
+```text
+Normal:
+
+👨 Wearing Shirt
+
+
+Hover:
+
+👕 Shirt only
+```
+
+The animation itself is reusable and is here:
+
+```text
+src/components/customer/DualImageHover/
+```
+
+and:
+
+```text
+src/hooks/useDualImageHover.js
+```
+
+**Don't edit these every time you change a category.**
+
+Normally you'll only change the category data/images.
+
+---
+
+# 3. Campaign Posters
+
+This is the section after Featured Categories.
+
+For example:
+
+```text
+FORMAL WEAR
+LUXURY
+BASICS
+TRAVEL
+SUMMER
+...
+```
+
+### Main component
+
+```text
+src/components/customer/CampaignPosters/
+```
+
+Inside:
+
+```text
+CampaignPosters.jsx
+CampaignPosters.css
+```
+
+### Which posters are displayed
+
+Go here:
+
+```text
+src/data/homepageCampaigns.js
+```
+
+Look for:
+
+```text
+campaignPosters
+```
+
+### Actual poster images
+
+Go here:
+
+```text
+public/assets/home/posters/
+```
+
+So if you want to replace:
+
+```text
+FORMAL WEAR
+```
+
+with:
+
+```text
+DENIM EDIT
+```
+
+you change the corresponding campaign data and replace its image.
+
+---
+
+# 4. Main Full-Width Advertisement
+
+This is the big banner after the campaign posters.
+
+Example:
+
+```text
+-----------------------------------------
+|                                       |
+|          DEER SUMMER SALE             |
+|          UP TO 30% OFF                |
+|                                       |
+-----------------------------------------
+```
+
+### Component
+
+```text
+src/components/customer/FullWidthCampaign/
+```
+
+Inside:
+
+```text
+FullWidthCampaign.jsx
+FullWidthCampaign.css
+```
+
+### Advertisement data
+
+Again:
+
+```text
+src/data/homepageCampaigns.js
+```
+
+Look for:
+
+```text
+fullWidthCampaign
+```
+
+### Actual image
+
+It is inside:
+
+```text
+public/assets/home/
+```
+
+and the exact filename/path is referenced by `fullWidthCampaign`.
+
+---
+
+# 🗂️ Very simple map
+
+Remember this:
+
+```text
+DEER FRONTEND
+│
+├── src/
+│   │
+│   ├── data/
+│   │   ├── homepageCampaigns.js       ← ADS + POSTERS DATA
+│   │   └── featuredCategories.js      ← CATEGORY DATA
+│   │
+│   └── components/
+│       └── customer/
+│           │
+│           ├── EditorialMarquee/      ← SLIDING ADS
+│           │
+│           ├── FeaturedCategories/    ← CATEGORY CARDS
+│           │
+│           ├── CampaignPosters/       ← POSTER ADS
+│           │
+│           ├── FullWidthCampaign/     ← MAIN BIG AD
+│           │
+│           └── DualImageHover/         ← IMAGE TRANSITION
+│
+└── public/
+    └── assets/
+        └── home/
+            │
+            ├── campaigns/             ← SLIDING AD IMAGES
+            │
+            ├── categories/            ← CATEGORY IMAGES
+            │
+            └── posters/               ← POSTER IMAGES
+```
+
+### ⭐ The most important files for you
+
+If you're **not changing the animation/code**, and you just want to change the homepage content:
+
+| What you want to change | File                                                  |
+| ----------------------- | ----------------------------------------------------- |
+| Sliding ads             | `src/data/homepageCampaigns.js` → `marqueeAds`        |
+| Sliding ad images       | `public/assets/home/campaigns/`                       |
+| Featured categories     | `src/data/featuredCategories.js`                      |
+| Category images         | `public/assets/home/categories/`                      |
+| Campaign posters        | `src/data/homepageCampaigns.js` → `campaignPosters`   |
+| Poster images           | `public/assets/home/posters/`                         |
+| Main big advertisement  | `src/data/homepageCampaigns.js` → `fullWidthCampaign` |
+| Main ad image           | `public/assets/home/`                                 |
+| Image hover animation   | `src/hooks/useDualImageHover.js`                      |
+| Sliding animation       | `EditorialMarquee.jsx`                                |
+
+**So you don't need to touch `HomePage.jsx` every time you want to change an advertisement.** That's exactly why OpenCode created the centralized data files.

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td style="background:#1a1a2e;padding:24px 28px;color:#ffffff;">
+              <div style="font-size:20px;font-weight:bold;">Deer</div>
+              <div style="font-size:13px;color:#c9c9dd;margin-top:4px;">Your order is confirmed</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#333;">Hi {{name}},</p>
+              <p style="margin:0 0 20px;font-size:14px;line-height:1.6;color:#444;">
+                Thank you for your purchase. Your order
+                <strong style="color:#1a1a2e;">#{{orderNumber}}</strong> has been confirmed.
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #eee;">
+                {{{itemsHtml}}}
+              </table>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;font-size:13px;color:#555;">
+                <tr><td style="padding:3px 0;">Subtotal</td><td align="right">₹{{subtotal}}</td></tr>
+                {{#discountRow}}<tr><td style="padding:3px 0;">Discount</td><td align="right">-₹{{discountAmount}}</td></tr>{{/discountRow}}
+                <tr><td style="padding:3px 0;">Shipping</td><td align="right">{{#freeShipping}}FREE{{/freeShipping}}{{^freeShipping}}₹{{shippingFee}}{{/freeShipping}}</td></tr>
+                <tr>
+                  <td style="padding:8px 0 0;font-weight:bold;font-size:15px;color:#1a1a2e;">Total</td>
+                  <td align="right" style="padding:8px 0 0;font-weight:bold;font-size:15px;color:#1a1a2e;">₹{{total}}</td>
+                </tr>
+              </table>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;font-size:13px;color:#555;border-top:1px solid #eee;padding-top:14px;">
+                <tr><td style="padding:3px 0;color:#777;">Payment status</td><td align="right" style="text-transform:capitalize;">{{paymentStatus}}</td></tr>
+                <tr><td style="padding:3px 0;color:#777;">Delivery to</td><td align="right">{{city}}, {{state}}</td></tr>
+                {{#estimatedDelivery}}<tr><td style="padding:3px 0;color:#777;">Estimated delivery</td><td align="right">{{estimatedDelivery}}</td></tr>{{/estimatedDelivery}}
+              </table>
+              <p style="margin:24px 0 0;font-size:12px;line-height:1.6;color:#888;">
+                Questions about your order? Reply to this email and our team will help.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#fafafa;padding:16px 28px;font-size:11px;color:#999;">
+              © Deer Clothing. All rights reserved.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

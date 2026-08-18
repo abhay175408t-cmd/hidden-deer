@@ -1,0 +1,102 @@
+/*
+  DEER — global foundation
+  -------------------------------------------------
+  Typography:
+  - Inter — UI/navigation. Clean, modern, highly readable at small sizes and
+    long lengths; the standard editorial sans for premium interfaces.
+  - Italiana — brand wordmark ("DEER"). A refined, high-contrast display serif
+    with fashion-editorial character; distinctive without being decorative.
+
+  No design-system build-out yet — only variables used by the current
+  foundation (header, loader) plus core resets.
+*/
+
+:root {
+  /* Fonts */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-brand: 'Italiana', 'Times New Roman', serif;
+
+  /* Colors */
+  --color-bg: #ffffff;
+  --color-text: #111111;
+  --color-muted: #6b6b6b;
+  --color-hairline: #e5e5e5;
+  --color-loader-bg: #0b0b0b;
+
+  /* Spacing */
+  --space-page: 24px;
+  --space-section: 96px;
+
+  /* Header */
+  --header-height: 72px;
+  --header-height-mobile: 60px;
+
+  /* Motion */
+  --duration-fast: 0.2s;
+  --duration-medium: 0.4s;
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* Homepage */
+.home {
+  min-height: 100vh;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

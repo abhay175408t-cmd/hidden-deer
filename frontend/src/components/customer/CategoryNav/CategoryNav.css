@@ -1,0 +1,119 @@
+.category-nav {
+  z-index: 90;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-hairline);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+.category-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.category-nav__list {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+}
+
+/* Desktop: every item takes an equal share so the nav spans the full width —
+   Discover on the far left, the last category on the far right. */
+.category-nav__item {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-nav__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px 6px;
+  border: none;
+  background: none;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast) ease;
+  white-space: nowrap;
+}
+
+.category-nav__button:hover {
+  color: var(--color-text);
+}
+
+.category-nav__button[aria-current='true'] {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.category-nav__button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: -2px;
+}
+
+.category-nav__indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--color-text);
+  transform: translateX(0);
+  pointer-events: none;
+}
+
+.category-nav__skeleton {
+  display: block;
+  width: 72px;
+  height: 14px;
+  margin: 16px auto;
+  background: var(--color-hairline);
+  animation: category-nav-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes category-nav-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Mobile: the nav becomes a swipeable row; items keep their natural width. */
+@media (max-width: 768px) {
+  .category-nav__list {
+    min-width: max-content;
+    width: auto;
+    padding-inline: 0;
+  }
+
+  .category-nav__item {
+    flex: none;
+  }
+
+  .category-nav__button {
+    padding: 14px 14px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+}

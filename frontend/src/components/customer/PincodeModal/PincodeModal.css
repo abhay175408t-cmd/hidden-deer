@@ -1,0 +1,139 @@
+.pincode-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(11, 11, 11, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.pincode-modal__dialog {
+  position: relative;
+  width: min(100%, 420px);
+  padding: clamp(28px, 5vw, 44px);
+  background: var(--color-bg);
+  border: 1px solid var(--color-hairline);
+}
+
+.pincode-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.pincode-modal__close:hover {
+  color: var(--color-text);
+}
+
+.pincode-modal__close:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.pincode-modal__eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.pincode-modal__title {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.pincode-modal__hint {
+  margin: 10px 0 22px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.pincode-modal__field {
+  display: flex;
+  gap: 10px;
+}
+
+.pincode-modal__input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-text);
+  border-radius: 0;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  letter-spacing: 0.24em;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.pincode-modal__input::placeholder {
+  color: var(--color-muted);
+  letter-spacing: 0.24em;
+  opacity: 0.6;
+}
+
+.pincode-modal__input:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.pincode-modal__input[aria-invalid='true'] {
+  border-color: #8a2b2b;
+}
+
+.pincode-modal__submit {
+  padding: 12px 22px;
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.pincode-modal__submit:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.pincode-modal__submit:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.pincode-modal__error {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #8a2b2b;
+}
+
+.pincode-modal__note {
+  margin: 18px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+}

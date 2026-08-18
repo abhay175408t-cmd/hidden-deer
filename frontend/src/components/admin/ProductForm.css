@@ -1,0 +1,322 @@
+.product-form {
+  max-width: 100%;
+}
+
+.product-form__section {
+  margin-bottom: 32px;
+}
+
+.product-form__section-title {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.product-form__section-count {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.product-form__section-note {
+  margin: 0 0 16px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+.product-form__row {
+  margin-bottom: 16px;
+}
+
+.product-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+
+.product-form__label {
+  display: block;
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.product-form__required {
+  color: #b03a33;
+}
+
+.product-form__input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  font-size: 0.94rem;
+  font-family: var(--font-ui);
+  color: var(--color-text);
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-form__input:focus {
+  outline: none;
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.04);
+}
+
+.product-form__input[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.product-form__textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.product-form__hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.product-form__field-error {
+  margin: 6px 0 0;
+  font-size: 0.84rem;
+  color: #b03a33;
+}
+
+.product-form__checkboxes {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.product-form__checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.product-form__checkbox-label input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-text);
+}
+
+.product-form__images {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.product-form__image {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.product-form__image--primary {
+  border-color: #111111;
+}
+
+.product-form__image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-form__image-primary-label {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  padding: 1px 6px;
+  background: rgba(17, 17, 17, 0.85);
+  color: #ffffff;
+  font-size: 0.68rem;
+  border-radius: 3px;
+}
+
+.product-form__image-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid rgba(17, 17, 17, 0.4);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-form__image-remove:hover {
+  background: #ffffff;
+  border-color: #111111;
+}
+
+.product-form__upload-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--color-hairline);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.product-form__upload-btn:hover {
+  background: rgba(17, 17, 17, 0.03);
+}
+
+.product-form__upload-btn input {
+  display: none;
+}
+
+.product-form__variant {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+}
+
+.product-form__variant-title {
+  padding: 0 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.product-form__variant-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 16px;
+}
+
+.product-form__small-btn {
+  margin-top: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-hairline);
+  background: transparent;
+  color: #b03a33;
+  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-form__small-btn:hover {
+  background: rgba(214, 69, 61, 0.06);
+}
+
+.product-form__add-variant {
+  margin-top: 8px;
+  padding: 8px 14px;
+  border: 1px dashed var(--color-hairline);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.88rem;
+  font-family: var(--font-ui);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-form__add-variant:hover {
+  border-color: #111111;
+}
+
+.product-form__api-error {
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  border: 1px solid rgba(214, 69, 61, 0.4);
+  background: rgba(214, 69, 61, 0.08);
+  color: #b03a33;
+  font-size: 0.88rem;
+  border-radius: 4px;
+}
+
+.product-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.product-form__submit {
+  padding: 9px 20px;
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-family: var(--font-ui);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-form__submit:hover {
+  background: rgba(17, 17, 17, 0.85);
+}
+
+.product-form__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.product-form__cancel {
+  padding: 9px 20px;
+  border: 1px solid var(--color-hairline);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.92rem;
+  font-family: var(--font-ui);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-form__cancel:hover {
+  background: rgba(17, 17, 17, 0.03);
+}
+
+.product-form__cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.product-form__input:focus-visible,
+.product-form__small-btn:focus-visible,
+.product-form__add-variant:focus-visible,
+.product-form__upload-btn:focus-visible,
+.product-form__image-remove:focus-visible,
+.product-form__submit:focus-visible,
+.product-form__cancel:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .product-form__grid,
+  .product-form__variant-grid {
+    grid-template-columns: 1fr;
+  }
+}

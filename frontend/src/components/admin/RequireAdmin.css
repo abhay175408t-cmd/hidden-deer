@@ -1,0 +1,25 @@
+.admin-guard {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: var(--space-page);
+  background: var(--color-bg);
+}
+
+.admin-guard__brand {
+  font-family: var(--font-brand);
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--color-text);
+}
+
+.admin-guard__message {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}

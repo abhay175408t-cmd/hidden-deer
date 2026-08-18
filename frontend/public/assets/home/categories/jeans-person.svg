@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice">
+  <rect width="900" height="1100" fill="#33404F"/>
+  <g transform="rotate(1 450 640)"><path fill="#F2F0EB" fill-opacity="0.88" d="M 397.3 217.5 Q 397.3 132.25 450 132.25 Q 502.7 132.25 502.7 217.5 Q 502.7 264 450 264 Q 397.3 264 397.3 217.5 Z"/><path fill="#F2F0EB" fill-opacity="0.88" d="M 341.5 282.6 L 558.5 282.6 L 586.4 543 L 530.6 549.2 L 496.5 437.6 L 496.5 1101 L 403.5 1101 L 403.5 437.6 L 369.4 549.2 L 313.6 543 Z"/><path stroke="#F2F0EB" stroke-opacity="0.4" stroke-width="7.75" d="M 450 282.6 L 450 1101"/></g>
+  <rect x="26" y="26" width="848" height="1048" fill="none" stroke="#F2F0EB" stroke-opacity="0.18" stroke-width="2"/>
+  <text x="70" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="40" letter-spacing="13.600000000000001" fill="#F2F0EB" fill-opacity="0.9">DEER</text>
+  <text x="70" y="1030" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="22" letter-spacing="9" fill="#F2F0EB">JEANS</text>
+</svg>

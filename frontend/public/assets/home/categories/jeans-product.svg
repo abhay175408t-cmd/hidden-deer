@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice">
+  <rect width="900" height="1100" fill="#33404F"/>
+  <circle cx="450" cy="545" r="330" fill="#F2F0EB" fill-opacity="0.045"/>
+  <g fill="none" stroke="#F2F0EB" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M 300 250 L 600 250 L 600 285 L 600 800 L 500 800 L 500 445 L 490 445 L 490 800 L 410 800 L 410 445 L 400 445 L 400 800 L 300 800 L 300 445 L 300 285 Z"/>
+  </g>
+  <rect x="26" y="26" width="848" height="1048" fill="none" stroke="#F2F0EB" stroke-opacity="0.18" stroke-width="2"/>
+  <text x="70" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="40" letter-spacing="13.600000000000001" fill="#F2F0EB" fill-opacity="0.85">DEER</text>
+  <text x="70" y="1030" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="20" letter-spacing="8" fill="#9AA7B4">JEANS</text>
+</svg>

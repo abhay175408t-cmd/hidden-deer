@@ -1,0 +1,43 @@
+.dual-image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.dual-image__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.dual-image__layer--primary {
+  z-index: 1;
+}
+
+.dual-image__layer--secondary {
+  z-index: 2;
+  opacity: 0;
+}
+
+.dual-image__fallback {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-brand);
+  font-size: 28px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: #d8d8d4;
+  background: #f4f4f2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dual-image__layer {
+    transition: opacity 0.01ms linear;
+  }
+}
