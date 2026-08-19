@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import MainLayout from '../components/customer/MainLayout/MainLayout';
 import HomePage from '../pages/HomePage';
+import CategoryPage from '../pages/CategoryPage';
 import ProductDetailPage from '../pages/ProductDetailPage';
 import TestPage from '../pages/TestPage';
 import RequireAdmin from '../components/admin/RequireAdmin';
@@ -24,9 +26,12 @@ export default function AppRoutes() {
   return (
     <Routes>
       {/* Customer application */}
-      <Route path="/" element={<HomePage />} />
-      <Route path="/products/:slug" element={<ProductDetailPage />} />
-      <Route path="/test" element={<TestPage />} />
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/category/:categorySlug" element={<CategoryPage />} />
+        <Route path="/products/:slug" element={<ProductDetailPage />} />
+        <Route path="/test" element={<TestPage />} />
+      </Route>
 
       {/* Admin — public */}
       <Route path="/admin/login" element={<AdminLoginPage />} />

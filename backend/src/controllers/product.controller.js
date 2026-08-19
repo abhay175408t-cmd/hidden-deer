@@ -28,7 +28,7 @@ const getProducts = async (req, res, next) => {
 
 const getProductFilters = async (req, res, next) => {
   try {
-    const filters = await productSearchService.getProductFilters();
+    const filters = await productSearchService.getProductFilters(req.query);
     res.status(200).json({
       success: true,
       data: { filters },

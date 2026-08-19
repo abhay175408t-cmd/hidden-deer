@@ -112,6 +112,15 @@ const resolveCategorySlug = async (slug) => {
   return category._id;
 };
 
+// Exact-match (case-insensitive) filter for a scalar string attribute such as
+// brand, gender, pattern, fit, material, collar, sleeves or deliveryTime.
+const buildScalarFieldQuery = (field, values) => {
+  if (!values || values.length === 0) return null;
+  return {
+    [field]: { $in: values.map((value) => new RegExp(`^${escapeRegex(value)}$`, 'i')) },
+  };
+};
+
 const buildFilterQuery = async (parsed) => {
   const filter = { isActive: true };
   const orConditions = [];
@@ -140,12 +149,19 @@ const buildFilterQuery = async (parsed) => {
     filter.category = { $in: categoryIds };
   }
 
-  if (parsed.brand && parsed.brand.length > 0) {
-    filter.brand = { $in: parsed.brand.map((b) => new RegExp(`^${escapeRegex(b)}$`, 'i')) };
-  }
-
-  if (parsed.gender && parsed.gender.length > 0) {
-    filter.gender = { $in: parsed.gender.map((g) => new RegExp(`^${escapeRegex(g)}$`, 'i')) };
+  const scalarFilters = [
+    ['brand', parsed.brand],
+    ['gender', parsed.gender],
+    ['pattern', parsed.pattern],
+    ['fit', parsed.fit],
+    ['material', parsed.material],
+    ['collar', parsed.collar],
+    ['sleeves', parsed.sleeves],
+    ['deliveryTime', parsed.deliveryTime],
+  ];
+  for (const [field, values] of scalarFilters) {
+    const scalarQuery = buildScalarFieldQuery(field, values);
+    if (scalarQuery) Object.assign(filter, scalarQuery);
   }
 
   if (parsed.minDiscount !== undefined) {
@@ -227,6 +243,9 @@ const serializeProduct = (product) => {
     price: product.price,
     discountPrice: product.discountPrice ?? null,
     image: product.images?.[0] ? { url: product.images[0].url, alt: product.images[0].alt ?? null } : null,
+    images: product.images
+      ? product.images.slice(0, 2).map((img) => ({ url: img.url, alt: img.alt }))
+      : [],
     colors: product.colors || [],
     sizes: product.sizes || [],
     rating: product.rating,
@@ -248,6 +267,12 @@ const searchProducts = async (query) => {
     color: parseCommaSeparated(query.color),
     brand: parseCommaSeparated(query.brand),
     gender: parseCommaSeparated(query.gender),
+    pattern: parseCommaSeparated(query.pattern),
+    fit: parseCommaSeparated(query.fit),
+    material: parseCommaSeparated(query.material),
+    collar: parseCommaSeparated(query.collar),
+    sleeves: parseCommaSeparated(query.sleeves),
+    deliveryTime: parseCommaSeparated(query.deliveryTime),
     minDiscount: parseNumber(query.minDiscount, { min: 0, max: 100, name: 'minDiscount' }),
     minRating: parseNumber(query.minRating, { min: 0, max: 5, name: 'minRating' }),
     inStock: parseBoolean(query.inStock),
@@ -264,8 +289,6 @@ const searchProducts = async (query) => {
   if (earlyReturn) return earlyReturn;
 
   const sortBy = getSort(parsed.sort);
-
-  const skip = (parsed.page - 1) * parsed.limit;
 
   const total = await Product.countDocuments(filter);
   const products = await Product.find(filter)
@@ -305,51 +328,140 @@ const searchProducts = async (query) => {
   };
 };
 
-const getProductFilters = async () => {
-  const activeProducts = await Product.find({ isActive: true })
-    .select('category brand colors sizes variants gender discountPrice price rating')
-    .lean();
+// ---------------------------------------------------------------------------
+// Filter metadata — category-scoped, computed via a single $facet aggregation.
+// ---------------------------------------------------------------------------
 
-  const categories = await Category.find({ isActive: true }).select('name slug').lean();
+// Collect values from a product array field AND the matching variant field,
+// e.g. sizes + variants[].size, colors + variants[].color.
+const combinedArrayFacet = (arrayField, variantField) => [
+  {
+    $project: {
+      all: {
+        $concatArrays: [
+          { $ifNull: [`$${arrayField}`, []] },
+          {
+            $map: {
+              input: { $ifNull: ['$variants', []] },
+              as: 'v',
+              in: `$$v.${variantField}`,
+            },
+          },
+        ],
+      },
+    },
+  },
+  { $unwind: '$all' },
+  { $match: { all: { $ne: null } } },
+  { $group: { _id: null, values: { $addToSet: '$all' } } },
+];
 
-  const categoryMap = new Map(categories.map((c) => [String(c._id), { name: c.name, slug: c.slug }]));
+// Distinct non-null values of a scalar string attribute.
+const scalarFacet = (field) => [
+  { $match: { [field]: { $ne: null } } },
+  { $group: { _id: null, values: { $addToSet: `$${field}` } } },
+];
 
-  const sizesSet = new Set();
-  const colorsSet = new Set();
-  const brandsSet = new Set();
-  const genderSet = new Set();
-  let minPrice = Infinity;
-  let maxPrice = -Infinity;
+// min/max over the effective price (discountPrice when valid, else price).
+const priceFacet = () => [
+  {
+    $project: {
+      effectivePrice: {
+        $cond: [
+          {
+            $and: [
+              { $gt: ['$discountPrice', 0] },
+              { $lte: ['$discountPrice', '$price'] },
+            ],
+          },
+          '$discountPrice',
+          '$price',
+        ],
+      },
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      min: { $min: '$effectivePrice' },
+      max: { $max: '$effectivePrice' },
+    },
+  },
+];
 
-  for (const product of activeProducts) {
-    const effectivePrice = product.discountPrice && product.discountPrice > 0 && product.discountPrice <= product.price
-      ? product.discountPrice
-      : product.price;
-    if (effectivePrice < minPrice) minPrice = effectivePrice;
-    if (effectivePrice > maxPrice) maxPrice = effectivePrice;
-
-    if (product.brand) brandsSet.add(product.brand);
-    if (product.gender) genderSet.add(product.gender);
-    if (product.colors) product.colors.forEach((c) => colorsSet.add(c));
-    if (product.sizes) product.sizes.forEach((s) => sizesSet.add(s));
-    if (product.variants) {
-      product.variants.forEach((v) => {
-        if (v.size) sizesSet.add(v.size);
-        if (v.color) colorsSet.add(v.color);
-      });
-    }
+const getProductFilters = async (query = {}) => {
+  const categorySlugs = parseCommaSeparated(query.category);
+  const categoryIds = [];
+  for (const slug of categorySlugs) {
+    const category = await Category.findOne({
+      slug: slug.toLowerCase(),
+      isActive: true,
+    })
+      .select('_id')
+      .lean();
+    if (category) categoryIds.push(category._id);
   }
 
-  return {
-    categories: Array.from(categoryMap.values()),
-    sizes: Array.from(sizesSet).sort(),
-    colors: Array.from(colorsSet).sort(),
-    brands: Array.from(brandsSet).sort(),
-    gender: Array.from(genderSet).sort(),
-    price: {
-      min: minPrice === Infinity ? 0 : minPrice,
-      max: maxPrice === -Infinity ? 0 : maxPrice,
+  const match = { isActive: true };
+  if (categoryIds.length > 0) {
+    match.category = { $in: categoryIds };
+  }
+
+  const pipeline = [
+    { $match: match },
+    {
+      $facet: {
+        sizes: combinedArrayFacet('sizes', 'size'),
+        colors: combinedArrayFacet('colors', 'color'),
+        brands: scalarFacet('brand'),
+        genders: scalarFacet('gender'),
+        patterns: scalarFacet('pattern'),
+        fits: scalarFacet('fit'),
+        materials: scalarFacet('material'),
+        collars: scalarFacet('collar'),
+        sleeves: scalarFacet('sleeves'),
+        deliveryTimes: scalarFacet('deliveryTime'),
+        price: priceFacet(),
+      },
     },
+  ];
+
+  const [result] = await Product.aggregate(pipeline);
+
+  const pickValues = (bucket) =>
+    bucket && bucket[0] && Array.isArray(bucket[0].values) ? bucket[0].values : [];
+  const sortValues = (values) =>
+    Array.from(values).sort((a, b) => String(a).localeCompare(String(b), 'en'));
+
+  const categories = await Category.find({ isActive: true })
+    .select('_id name slug')
+    .lean();
+
+  const scopedCategory =
+    categoryIds.length === 1
+      ? categories.find((category) => String(category._id) === String(categoryIds[0])) || null
+      : null;
+
+  return {
+    category: scopedCategory
+      ? { id: scopedCategory._id, name: scopedCategory.name, slug: scopedCategory.slug }
+      : null,
+    categories: categories.map((category) => ({
+      id: category._id,
+      name: category.name,
+      slug: category.slug,
+    })),
+    genders: sortValues(pickValues(result.genders)),
+    sizes: sortValues(pickValues(result.sizes)),
+    colors: sortValues(pickValues(result.colors)),
+    brands: sortValues(pickValues(result.brands)),
+    patterns: sortValues(pickValues(result.patterns)),
+    fits: sortValues(pickValues(result.fits)),
+    materials: sortValues(pickValues(result.materials)),
+    collars: sortValues(pickValues(result.collars)),
+    sleeves: sortValues(pickValues(result.sleeves)),
+    deliveryTime: sortValues(pickValues(result.deliveryTimes)),
+    price: (result.price && result.price[0]) || { min: 0, max: 0 },
   };
 };
 

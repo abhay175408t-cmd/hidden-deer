@@ -1,0 +1,8 @@
+.main-layout__content {
+  min-height: 60vh;
+}
+
+/* Skeleton fallback while the shared header/category nav is loading. */
+.main-layout__skeleton {
+  padding: var(--space-page);
+}

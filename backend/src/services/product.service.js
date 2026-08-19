@@ -13,6 +13,17 @@ const SORT_MAP = {
   popular: { rating: -1, reviewCount: -1 },
 };
 
+const GENDERS = ['men', 'women', 'unisex'];
+const STRING_ATTRIBUTES = [
+  'gender',
+  'pattern',
+  'fit',
+  'material',
+  'collar',
+  'sleeves',
+  'deliveryTime',
+];
+
 const MAX_LIMIT = 100;
 const DEFAULT_LIMIT = 20;
 
@@ -57,6 +68,20 @@ const validateProductData = (data) => {
   }
   if (data.stock !== undefined && data.stock < 0) {
     throw new AppError('Stock cannot be negative', 400);
+  }
+
+  for (const field of STRING_ATTRIBUTES) {
+    if (data[field] !== undefined && typeof data[field] !== 'string') {
+      throw new AppError(`${field} must be a string`, 400);
+    }
+  }
+
+  if (
+    data.gender !== undefined &&
+    data.gender !== '' &&
+    !GENDERS.includes(String(data.gender).toLowerCase())
+  ) {
+    throw new AppError('Gender must be one of: men, women, unisex', 400);
   }
 
   if (data.images !== undefined) {
@@ -161,6 +186,14 @@ const normalizeProductData = (data) => {
   if (Array.isArray(data.tags)) {
     data.tags = normalizeUniqueArray(data.tags);
   }
+  for (const field of STRING_ATTRIBUTES) {
+    if (typeof data[field] === 'string') {
+      data[field] = data[field].trim() || undefined;
+    }
+  }
+  if (typeof data.gender === 'string' && data.gender) {
+    data.gender = data.gender.toLowerCase();
+  }
   if (Array.isArray(data.variants)) {
     data.variants = data.variants.map((variant) => ({
       ...variant,
@@ -247,6 +280,13 @@ const serializeDetailProduct = (product) => ({
   slug: product.slug,
   description: product.description,
   brand: product.brand,
+  gender: product.gender ?? 'men',
+  pattern: product.pattern ?? null,
+  fit: product.fit ?? null,
+  material: product.material ?? null,
+  collar: product.collar ?? null,
+  sleeves: product.sleeves ?? null,
+  deliveryTime: product.deliveryTime ?? null,
   price: product.price,
   discountPrice: product.discountPrice ?? null,
   category: product.category,
@@ -483,6 +523,13 @@ const update = async (id, data) => {
     'description',
     'category',
     'brand',
+    'gender',
+    'pattern',
+    'fit',
+    'material',
+    'collar',
+    'sleeves',
+    'deliveryTime',
     'price',
     'discountPrice',
     'images',
@@ -582,6 +629,13 @@ const serializeAdminProductDetail = (product) => ({
   slug: product.slug,
   description: product.description,
   brand: product.brand ?? null,
+  gender: product.gender ?? 'men',
+  pattern: product.pattern ?? null,
+  fit: product.fit ?? null,
+  material: product.material ?? null,
+  collar: product.collar ?? null,
+  sleeves: product.sleeves ?? null,
+  deliveryTime: product.deliveryTime ?? null,
   price: product.price,
   discountPrice: product.discountPrice ?? null,
   category: product.category

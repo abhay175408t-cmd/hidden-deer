@@ -1,18 +1,23 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import api from '../api/axios';
+import { buildProductParams, serializeFilters } from '../lib/productQuery';
 
 /**
  * Paginated product fetching with scroll-based lazy loading.
  *
  * Loads the first batch immediately; further batches load as a sentinel
  * element (ref via `sentinelRef`) approaches the viewport. Products are
- * appended, never replaced, while the filter (category) stays the same.
+ * appended, never replaced, while the filter state stays the same.
  *
- * Uses only backend-supported params: page, limit, category, sort.
+ * Accepts the full filter state ({ color, size, brand, pattern, fit,
+ * material, collar, sleeves, deliveryTime, minPrice, maxPrice, inStock }).
+ * When the filter state or sort changes, the list resets to page 1 and the
+ * first batch reloads.
  */
 const BATCH_SIZE = 8;
+const EMPTY_FILTERS = {};
 
-export default function useInfiniteProducts({ category, sort = 'newest' } = {}) {
+export default function useInfiniteProducts({ category, filters = EMPTY_FILTERS, sort = 'newest' } = {}) {
   const [products, setProducts] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,6 +26,7 @@ export default function useInfiniteProducts({ category, sort = 'newest' } = {}) 
   const sentinelRef = useRef(null);
   const activeRef = useRef(true);
   const busyRef = useRef(false);
+  const paramsRef = useRef({ category, filters, sort });
 
   const loadPage = useCallback(
     async (page, append) => {
@@ -33,11 +39,8 @@ export default function useInfiniteProducts({ category, sort = 'newest' } = {}) 
         setError(null);
       }
       try {
-        const params = new URLSearchParams();
-        if (category && category !== 'discover') params.set('category', category);
-        params.set('page', String(page));
-        params.set('limit', String(BATCH_SIZE));
-        params.set('sort', sort);
+        const { category, filters, sort } = paramsRef.current;
+        const params = buildProductParams({ category, filters, sort, page, limit: BATCH_SIZE });
         const res = await api.get('/products', { params });
         const data = res.data?.data;
         if (!activeRef.current) return;
@@ -56,12 +59,20 @@ export default function useInfiniteProducts({ category, sort = 'newest' } = {}) 
         }
       }
     },
-    [category, sort]
+    []
+  );
+
+  // Content-based signature: a freshly-created-but-identical filters object
+  // (e.g. a default {} built each render) must not retrigger a reload.
+  const signature = useMemo(
+    () => [category, sort, JSON.stringify(serializeFilters(filters))].join('\u0000'),
+    [category, sort, filters]
   );
 
   // Reset + first batch. useLayoutEffect flushes the reset before paint so a
-  // category switch never flashes the previous category's products.
+  // category/filter switch never flashes the previous results.
   useLayoutEffect(() => {
+    paramsRef.current = { category, filters, sort };
     activeRef.current = true;
     busyRef.current = false;
     setProducts([]);
@@ -70,7 +81,7 @@ export default function useInfiniteProducts({ category, sort = 'newest' } = {}) 
     return () => {
       activeRef.current = false;
     };
-  }, [loadPage]);
+  }, [signature, loadPage]);
 
   // Scroll-based lazy loading: fetch the next batch when the sentinel nears.
   useEffect(() => {
