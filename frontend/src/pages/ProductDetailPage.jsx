@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { gsap } from '../lib/gsap';
 import api from '../api/axios';
-import Header from '../components/Header/Header';
 import './ProductDetailPage.css';
 
 function formatPrice(value) {
@@ -76,9 +75,7 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <>
-        <Header />
-        <main className="product-detail" aria-live="polite">
+      <main className="product-detail" aria-live="polite">
           <div className="product-detail__skeleton">
             <div className="product-detail__skeleton-gallery" />
             <div className="product-detail__skeleton-info">
@@ -88,15 +85,12 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </main>
-      </>
     );
   }
 
   if (notFound) {
     return (
-      <>
-        <Header />
-        <main className="product-detail" aria-live="polite">
+      <main className="product-detail" aria-live="polite">
           <div className="product-detail__state" role="status">
             <h1>Not found</h1>
             <p>The piece you are looking for does not exist or has been removed.</p>
@@ -105,15 +99,12 @@ export default function ProductDetailPage() {
             </Link>
           </div>
         </main>
-      </>
     );
   }
 
   if (error) {
     return (
-      <>
-        <Header />
-        <main className="product-detail" aria-live="polite">
+      <main className="product-detail" aria-live="polite">
           <div className="product-detail__state" role="alert">
             <h1>Something went wrong</h1>
             <p>{error}</p>
@@ -122,7 +113,6 @@ export default function ProductDetailPage() {
             </button>
           </div>
         </main>
-      </>
     );
   }
 
@@ -136,9 +126,7 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <>
-      <Header />
-      <main className="product-detail" aria-live="polite">
+    <main className="product-detail" aria-live="polite">
         <Link to="/" className="product-detail__back-link">
           ← Back to home
         </Link>
@@ -269,6 +257,5 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </main>
-    </>
   );
 }

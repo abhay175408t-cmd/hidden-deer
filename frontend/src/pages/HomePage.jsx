@@ -1,17 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { gsap } from '../lib/gsap';
 import Loader from '../components/Loader/Loader';
-import Header from '../components/Header/Header';
-import DeliveryBar from '../components/customer/DeliveryBar/DeliveryBar';
-import CategoryNav from '../components/customer/CategoryNav/CategoryNav';
 import EditorialMarquee from '../components/customer/EditorialMarquee/EditorialMarquee';
 import FeaturedCategories from '../components/customer/FeaturedCategories/FeaturedCategories';
 import CampaignPosters from '../components/customer/CampaignPosters/CampaignPosters';
 import FullWidthCampaign from '../components/customer/FullWidthCampaign/FullWidthCampaign';
 import ProductSection from '../components/customer/ProductSection/ProductSection';
-import Footer from '../components/customer/Footer/Footer';
-import useCategories from '../hooks/useCategories';
 import { marqueeAds, campaignPosters, fullWidthCampaign } from '../data/homepageCampaigns';
 import { filterFeaturedByBackend } from '../data/featuredCategories';
 import './HomePage.css';
@@ -19,32 +14,33 @@ import './HomePage.css';
 /**
  * DEER customer Discovery homepage.
  *
- * Layout order: Header → DeliveryBar → full-width CategoryNav → Editorial
- * marquee → Featured categories → Campaign posters → Full-width offer →
- * New & Popular (with filters + scroll-based lazy loading) → Footer.
+ * Layout order: Editorial marquee → Featured categories → Campaign posters →
+ * Full-width offer → New & Popular (with filters + scroll-based lazy loading).
+ * The persistent header, delivery bar, category nav and footer are provided by
+ * the shared MainLayout; categories come from its Outlet context.
  *
- * The top category nav drives discovery: selecting a category filters the
- * product section (and syncs the URL /?category=<slug>) while the homepage
- * structure stays intact. Discover shows the complete homepage.
+ * The top category nav navigates to the dedicated /category/<slug> listing
+ * pages. The in-page chips below keep filtering the product section via the
+ * /?category=<slug> search param.
  *
  * The URL is the single source of truth for the active category — it is
  * derived from search params, so a selection can never race with the URL
  * settling (no duplicated state to go stale).
  */
 export default function HomePage() {
+  const {
+    categories,
+    categoriesLoading,
+    categoriesError,
+    retryCategories,
+  } = useOutletContext();
+
   const [showLoader, setShowLoader] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const pageRef = useRef(null);
   const shouldScrollRef = useRef(false);
   const uiWriteRef = useRef(false);
   const prevCategoryRef = useRef(null);
-
-  const {
-    categories,
-    loading: categoriesLoading,
-    error: categoriesError,
-    retry: retryCategories,
-  } = useCategories();
 
   const activeCategory = useMemo(() => {
     const slug = searchParams.get('category');
@@ -61,7 +57,7 @@ export default function HomePage() {
   );
   const resolveCategoryLink = useCallback(
     (categorySlug) =>
-      categorySlug && categorySlugs.has(categorySlug) ? `/?category=${categorySlug}` : '/',
+      categorySlugs.has(categorySlug) ? `/category/${categorySlug}` : '/',
     [categorySlugs]
   );
   const resolvedAds = useMemo(
@@ -89,16 +85,9 @@ export default function HomePage() {
     [searchParams, setSearchParams]
   );
 
-  const handleNavSelect = useCallback(
-    (key) => {
-      selectCategory(key, { scroll: key !== 'discover' });
-    },
-    [selectCategory]
-  );
-
   // Smooth scroll to the product section when the active category changes —
-  // both from top-nav selections and from URL-driven navigation (marquee,
-  // posters, footer, category cards, back/forward). Never on first load.
+  // both from in-page chip selections and from URL-driven navigation
+  // (back/forward, footer links). Never on first load.
   useEffect(() => {
     if (categoriesLoading) return undefined;
     const prev = prevCategoryRef.current;
@@ -133,15 +122,6 @@ export default function HomePage() {
     <>
       {showLoader && <Loader onComplete={() => setShowLoader(false)} />}
       <div className="home" ref={pageRef}>
-        <Header categories={categories} />
-        <DeliveryBar />
-        <CategoryNav
-          categories={categories}
-          activeCategory={activeCategory}
-          onSelect={handleNavSelect}
-          loading={categoriesLoading}
-        />
-
         {categoriesError && (
           <div className="home__notice" role="alert">
             <span>Could not load categories.</span>
@@ -151,7 +131,7 @@ export default function HomePage() {
           </div>
         )}
 
-        <main id="main" className="home__content">
+        <main className="home__content">
           <EditorialMarquee ads={resolvedAds} />
           <FeaturedCategories categories={filterFeaturedByBackend(categories)} />
           <CampaignPosters posters={resolvedPosters} />
@@ -163,8 +143,6 @@ export default function HomePage() {
             onSelectCategory={(key) => selectCategory(key)}
           />
         </main>
-
-        <Footer categories={categories} />
       </div>
     </>
   );

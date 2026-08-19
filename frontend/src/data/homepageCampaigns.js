@@ -14,7 +14,7 @@ const HOME_ASSETS = '/assets/home';
 export const marqueeAds = [
   {
     key: 'summer-shirts',
-    image: `${HOME_ASSETS}/campaigns/marquee-summer.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-summer.jpg`,
     title: 'Summer Shirts',
     subtitle: 'Breathable layers for the warm months',
     price: 'Starting at ₹899',
@@ -24,7 +24,7 @@ export const marqueeAds = [
   },
   {
     key: 'formal-wear',
-    image: `${HOME_ASSETS}/campaigns/marquee-formal.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-formal.jpg`,
     title: 'Formal Wear',
     subtitle: 'Sharp silhouettes, quiet fabric',
     price: null,
@@ -34,7 +34,7 @@ export const marqueeAds = [
   },
   {
     key: 'denim-edit',
-    image: `${HOME_ASSETS}/campaigns/marquee-denim.svg`,
+    image: `${HOME_ASSETS}/posters/poster-denim.jpg`,
     title: 'The Denim Edit',
     subtitle: 'Wash them in. Live in them.',
     price: 'Starting at ₹1,299',
@@ -44,7 +44,7 @@ export const marqueeAds = [
   },
   {
     key: 'travel-capsule',
-    image: `${HOME_ASSETS}/campaigns/marquee-travel.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-travel.jpg`,
     title: 'Travel Capsule',
     subtitle: 'Five pieces. Every itinerary.',
     price: null,
@@ -54,7 +54,7 @@ export const marqueeAds = [
   },
   {
     key: 'the-basics',
-    image: `${HOME_ASSETS}/campaigns/marquee-basics.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-basics.jpg`,
     title: 'The Basics',
     subtitle: 'Everyday essentials in natural fibres',
     price: 'Starting at ₹499',
@@ -64,7 +64,7 @@ export const marqueeAds = [
   },
   {
     key: 'footwear',
-    image: `${HOME_ASSETS}/campaigns/marquee-shoes.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-shoes.jpg`,
     title: 'Footwear',
     subtitle: 'Ground the outfit',
     price: null,
@@ -74,7 +74,7 @@ export const marqueeAds = [
   },
   {
     key: 'quiet-luxury',
-    image: `${HOME_ASSETS}/campaigns/marquee-luxury.svg`,
+    image: `${HOME_ASSETS}/campaigns/marquee-luxury.jpg`,
     title: 'Quiet Luxury',
     subtitle: 'Small runs, considered details',
     price: null,
@@ -91,7 +91,7 @@ export const marqueeAds = [
 export const campaignPosters = [
   {
     key: 'poster-formal',
-    image: `${HOME_ASSETS}/posters/poster-formal.svg`,
+    image: `${HOME_ASSETS}/posters/poster-formal.jpg`,
     title: 'Formal Wear',
     subtitle: 'Tailored for the long hour',
     cta: 'Explore',
@@ -100,7 +100,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-luxury',
-    image: `${HOME_ASSETS}/posters/poster-luxury.svg`,
+    image: `${HOME_ASSETS}/posters/poster-luxury.jpg`,
     title: 'Luxury Edit',
     subtitle: 'Quiet clothes, made to last',
     cta: 'Explore',
@@ -109,7 +109,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-basics',
-    image: `${HOME_ASSETS}/posters/poster-basics.svg`,
+    image: `${HOME_ASSETS}/posters/poster-basic.jpg`,
     title: 'Basics',
     subtitle: 'The foundation of everything',
     cta: 'Shop',
@@ -118,7 +118,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-summer',
-    image: `${HOME_ASSETS}/posters/poster-summer.svg`,
+    image: `${HOME_ASSETS}/posters/poster-summer.jpg`,
     title: 'Summer',
     subtitle: 'Light layers, long days',
     cta: 'Shop',
@@ -127,7 +127,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-denim',
-    image: `${HOME_ASSETS}/posters/poster-denim.svg`,
+    image: `${HOME_ASSETS}/posters/poster-denim.jpg`,
     title: 'Denim',
     subtitle: 'Wash them in. Live in them.',
     cta: 'Shop Jeans',
@@ -136,7 +136,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-travel',
-    image: `${HOME_ASSETS}/posters/poster-travel.svg`,
+    image: `${HOME_ASSETS}/posters/poster-travel.jpg`,
     title: 'Travel',
     subtitle: 'Packs small, goes far',
     cta: 'Explore',
@@ -145,7 +145,7 @@ export const campaignPosters = [
   },
   {
     key: 'poster-shoes',
-    image: `${HOME_ASSETS}/posters/poster-shoes.svg`,
+    image: `${HOME_ASSETS}/posters/poster-shoes.jpg`,
     title: 'Shoes',
     subtitle: 'Ground the outfit',
     cta: 'Shop',
@@ -158,9 +158,9 @@ export const campaignPosters = [
  * Full-width main offer advertisement.
  */
 export const fullWidthCampaign = {
-  image: `${HOME_ASSETS}/campaigns/banner-sale.svg`,
+  image: `${HOME_ASSETS}/campaigns/banner-sales.jpg`,
   eyebrow: 'Last Chance',
-  title: 'Up to 30% Off',
+  title: 'Up to 60% Off',
   subtitle: 'The season sale is ending soon. New pieces at their best price.',
   cta: 'Shop the Sale',
   categorySlug: null, // null → routes to the full discovery page

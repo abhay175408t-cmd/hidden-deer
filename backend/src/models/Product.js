@@ -126,6 +126,37 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    gender: {
+      type: String,
+      enum: ['men', 'women', 'unisex'],
+      default: 'men',
+      lowercase: true,
+      trim: true,
+    },
+    pattern: {
+      type: String,
+      trim: true,
+    },
+    fit: {
+      type: String,
+      trim: true,
+    },
+    material: {
+      type: String,
+      trim: true,
+    },
+    collar: {
+      type: String,
+      trim: true,
+    },
+    sleeves: {
+      type: String,
+      trim: true,
+    },
+    deliveryTime: {
+      type: String,
+      trim: true,
+    },
     price: {
       type: Number,
       required: true,
@@ -235,6 +266,8 @@ productSchema.pre('validate', function () {
 });
 
 productSchema.index({ category: 1, isActive: 1 });
+productSchema.index({ category: 1, isActive: 1, price: 1 });
+productSchema.index({ gender: 1, category: 1 });
 productSchema.index({ tags: 1 });
 productSchema.index({ isFeatured: 1 });
 // Default catalog listing filter (active products, newest first).
