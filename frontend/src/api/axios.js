@@ -5,7 +5,7 @@ import axios from 'axios';
 //  - withCredentials: true is REQUIRED so the browser sends/accepts cookies
 //  - no Authorization header is ever set (no token is stored on the client)
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://hidden-deer-24vs.onrender.com/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
