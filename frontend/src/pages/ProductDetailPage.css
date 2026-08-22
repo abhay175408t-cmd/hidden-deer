@@ -7,11 +7,17 @@
 .product-detail__back-link {
   display: inline-block;
   margin-bottom: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-ui);
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
+  text-align: left;
   color: var(--color-muted);
+  cursor: pointer;
 }
 
 .product-detail__back-link:hover {
@@ -241,6 +247,11 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--color-muted);
+}
+
+.product-detail__bag-link {
+  color: var(--color-text);
+  text-underline-offset: 3px;
 }
 
 .product-detail__description {

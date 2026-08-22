@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { gsap } from '../lib/gsap';
 import api from '../api/axios';
+import useGuestCart from '../hooks/useGuestCart';
+import SimilarProducts from '../components/customer/SimilarProducts/SimilarProducts';
 import './ProductDetailPage.css';
 
 function formatPrice(value) {
@@ -14,6 +16,8 @@ function formatPrice(value) {
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const { addItem } = useGuestCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,8 +25,19 @@ export default function ProductDetailPage() {
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [showAuthNotice, setShowAuthNotice] = useState(false);
+  const [addedToBag, setAddedToBag] = useState(false);
   const mainImageRef = useRef(null);
+
+  // DEMO BYPASS — go back through browser history so the previous listing
+  // page restores its URL filters and scroll position instead of remounting
+  // from scratch on "/".
+  const handleBack = useCallback(() => {
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
 
   const loadProduct = useCallback(async () => {
     setLoading(true);
@@ -39,7 +54,7 @@ export default function ProductDetailPage() {
       setActiveImage(0);
       setSelectedSize('');
       setSelectedColor('');
-      setShowAuthNotice(false);
+      setAddedToBag(false);
     } catch (err) {
       if (err.response?.status === 404) {
         setNotFound(true);
@@ -121,15 +136,19 @@ export default function ProductDetailPage() {
       ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
       : null;
 
+  // DEMO BYPASS — previously gated behind sign-in ("Signing in is required…").
+  // Anyone can bag items now; they land in the localStorage guest cart and
+  // the header counter updates instantly via useGuestCart's subscription.
   const handleAddToBag = () => {
-    setShowAuthNotice(true);
+    addItem(product, { size: selectedSize || null, color: selectedColor || null });
+    setAddedToBag(true);
   };
 
   return (
     <main className="product-detail" aria-live="polite">
-        <Link to="/" className="product-detail__back-link">
-          ← Back to home
-        </Link>
+        <button type="button" className="product-detail__back-link" onClick={handleBack}>
+          ← Back
+        </button>
 
         <div className="product-detail__layout">
           <div className="product-detail__gallery">
@@ -239,9 +258,12 @@ export default function ProductDetailPage() {
               {product.stockStatus === 'out_of_stock' ? 'Out of stock' : 'Add to bag'}
             </button>
 
-            {showAuthNotice && (
+            {addedToBag && (
               <p className="product-detail__auth-notice" role="status">
-                Signing in is required to add items to your bag.
+                Added to your bag —{' '}
+                <Link to="/cart" className="product-detail__bag-link">
+                  view bag
+                </Link>
               </p>
             )}
 
@@ -256,6 +278,8 @@ export default function ProductDetailPage() {
             )}
           </div>
         </div>
+
+        <SimilarProducts product={product} />
       </main>
   );
 }

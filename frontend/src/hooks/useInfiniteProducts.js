@@ -16,6 +16,16 @@ import { buildProductParams, serializeFilters } from '../lib/productQuery';
  */
 const BATCH_SIZE = 8;
 const EMPTY_FILTERS = {};
+const CACHE_LIMIT = 12;
+
+/**
+ * Module-level listing cache keyed by the filter signature. When the customer
+ * opens a product and presses Back, the CategoryPage remounts and hydrates
+ * from here synchronously — no skeleton flash, no network round-trip — so the
+ * browser's native history scroll restoration lands on the exact spot they
+ * left. Newest entries win; the map evicts oldest beyond CACHE_LIMIT.
+ */
+const listingCache = new Map();
 
 export default function useInfiniteProducts({ category, filters = EMPTY_FILTERS, sort = 'newest' } = {}) {
   const [products, setProducts] = useState([]);
@@ -27,6 +37,7 @@ export default function useInfiniteProducts({ category, filters = EMPTY_FILTERS,
   const activeRef = useRef(true);
   const busyRef = useRef(false);
   const paramsRef = useRef({ category, filters, sort });
+  const signatureRef = useRef('');
 
   const loadPage = useCallback(
     async (page, append) => {
@@ -70,18 +81,40 @@ export default function useInfiniteProducts({ category, filters = EMPTY_FILTERS,
   );
 
   // Reset + first batch. useLayoutEffect flushes the reset before paint so a
-  // category/filter switch never flashes the previous results.
+  // category/filter switch never flashes the previous results. A cache hit
+  // hydrates synchronously instead (see listingCache above) — Back navigation
+  // re-renders the full accumulated list with no skeleton and no fetch.
   useLayoutEffect(() => {
     paramsRef.current = { category, filters, sort };
+    signatureRef.current = signature;
     activeRef.current = true;
     busyRef.current = false;
-    setProducts([]);
-    setPagination(null);
-    loadPage(1, false);
+    const cached = listingCache.get(signature);
+    if (cached) {
+      setProducts(cached.products);
+      setPagination(cached.pagination);
+      setLoading(false);
+      setError(null);
+    } else {
+      setProducts([]);
+      setPagination(null);
+      loadPage(1, false);
+    }
     return () => {
       activeRef.current = false;
     };
   }, [signature, loadPage]);
+
+  // Keep the cache entry fresh with the full accumulated list after every
+  // settled load (page 1 and appends alike).
+  useEffect(() => {
+    if (!signatureRef.current || loading || loadingMore || error) return;
+    if (products.length === 0 && !pagination) return;
+    if (listingCache.size >= CACHE_LIMIT) {
+      listingCache.delete(listingCache.keys().next().value);
+    }
+    listingCache.set(signatureRef.current, { products, pagination });
+  }, [products, pagination, loading, loadingMore, error]);
 
   // Scroll-based lazy loading: fetch the next batch when the sentinel nears.
   useEffect(() => {

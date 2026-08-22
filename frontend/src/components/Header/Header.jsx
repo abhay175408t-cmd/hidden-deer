@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, Search, User, ShoppingBag } from 'lucide-react';
+import useGuestCart from '../../hooks/useGuestCart';
 import './Header.css';
 
 const iconProps = { size: 20, strokeWidth: 1.5 };
@@ -15,6 +16,7 @@ function slugify(value) {
 
 export default function Header({ categories = [] }) {
   const navigate = useNavigate();
+  const { itemCount } = useGuestCart();
   const [query, setQuery] = useState('');
 
   const handleSearchSubmit = (event) => {
@@ -64,8 +66,20 @@ export default function Header({ categories = [] }) {
           <button type="button" className="header__action" aria-label="Profile">
             <User {...iconProps} aria-hidden="true" />
           </button>
-          <button type="button" className="header__action" aria-label="Shopping bag">
-            <ShoppingBag {...iconProps} aria-hidden="true" />
+          <button
+            type="button"
+            className="header__action"
+            aria-label={`Shopping bag${itemCount > 0 ? `, ${itemCount} item${itemCount === 1 ? '' : 's'}` : ''}`}
+            onClick={() => navigate('/cart')}
+          >
+            <span className="header__bag">
+              <ShoppingBag {...iconProps} aria-hidden="true" />
+              {itemCount > 0 && (
+                <span className="header__bag-count" aria-hidden="true">
+                  {itemCount > 9 ? '9+' : itemCount}
+                </span>
+              )}
+            </span>
           </button>
         </div>
       </nav>

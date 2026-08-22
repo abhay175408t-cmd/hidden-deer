@@ -3,6 +3,7 @@ import MainLayout from '../components/customer/MainLayout/MainLayout';
 import HomePage from '../pages/HomePage';
 import CategoryPage from '../pages/CategoryPage';
 import ProductDetailPage from '../pages/ProductDetailPage';
+import CartPage from '../pages/CartPage';
 import TestPage from '../pages/TestPage';
 import RequireAdmin from '../components/admin/RequireAdmin';
 import AdminLayout from '../components/admin/AdminLayout';
@@ -30,6 +31,7 @@ export default function AppRoutes() {
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:categorySlug" element={<CategoryPage />} />
         <Route path="/products/:slug" element={<ProductDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/test" element={<TestPage />} />
       </Route>
 
