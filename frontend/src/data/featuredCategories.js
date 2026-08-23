@@ -1,8 +1,8 @@
-// DEER featured category cards for the homepage.
+// HIDDEN DEER featured category cards for the homepage.
 //
 // Each card shows IMAGE A (lifestyle / person wearing) by default and
 // transitions to IMAGE B (clean product-only shot) on hover — the signature
-// DEER interaction. Imagery is frontend-managed (no homepage CMS on the
+// HIDDEN DEER interaction. Imagery is frontend-managed (no homepage CMS on the
 // backend yet); swap the files under public/assets/home/categories/ to
 // replace visuals without touching components.
 //

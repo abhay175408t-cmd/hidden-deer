@@ -16,8 +16,8 @@ const navItems = [
 export default function AdminSidebar({ onNavigate }) {
   return (
     <div className="admin-sidebar">
-      <div className="admin-sidebar__brand" aria-label="DEER admin home">
-        DEER
+      <div className="admin-sidebar__brand" aria-label="Hidden Deer admin home">
+        HIDDEN DEER
       </div>
 
       <nav className="admin-sidebar__nav" aria-label="Admin navigation links">

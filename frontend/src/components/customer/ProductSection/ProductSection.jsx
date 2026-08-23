@@ -74,7 +74,7 @@ export default function ProductSection({ categories, activeCategory, onSelectCat
     <section className="ps" ref={rootRef} id="new-and-popular" aria-labelledby="ps-title">
       <header className="ps__head">
         <div data-reveal="title">
-          <p className="ps__eyebrow">{isDiscover ? 'The Deer Edit' : activeMeta?.name || 'The Deer Edit'}</p>
+          <p className="ps__eyebrow">{isDiscover ? 'The Hidden Deer Edit' : activeMeta?.name || 'The Hidden Deer Edit'}</p>
           <h2 id="ps-title" className="ps__title">
             {isDiscover ? 'New and Popular' : `${activeMeta?.name || 'Collection'} — New Season`}
           </h2>

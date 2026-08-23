@@ -133,7 +133,7 @@ export default function EditorialMarquee({ ads }) {
       className={`em${reducedMotion ? ' em--reduced' : ''}`}
       data-em-section
       ref={rootRef}
-      aria-label="Deer campaign highlights"
+      aria-label="Hidden Deer campaign highlights"
       aria-roledescription="scrolling banner"
       onMouseEnter={() => setMovementPaused(true)}
       onMouseLeave={() => setMovementPaused(false)}

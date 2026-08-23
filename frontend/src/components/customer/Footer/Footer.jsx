@@ -33,8 +33,8 @@ export default function Footer({ categories }) {
     <footer className="footer" aria-label="Site footer">
       <div className="footer__inner">
         <div className="footer__brand">
-          <Link to="/" className="footer__logo" aria-label="Deer home">
-            DEER
+          <Link to="/" className="footer__logo" aria-label="Hidden Deer home">
+            HIDDEN DEER
           </Link>
           <p className="footer__tagline">Quiet clothes, made to last.</p>
         </div>
@@ -88,14 +88,14 @@ export default function Footer({ categories }) {
 
       <div className="footer__newsletter">
         <div>
-          <h3 className="footer__newsletter-title">Join the Deer List</h3>
+          <h3 className="footer__newsletter-title">Join the Hidden Deer List</h3>
           <p className="footer__newsletter-copy">
             New arrivals, small runs and member-only offers. No noise.
           </p>
         </div>
         {subscribed ? (
           <p className="footer__newsletter-ok" role="status">
-            You&apos;re on the list. Welcome to Deer.
+            You&apos;re on the list. Welcome to Hidden Deer.
           </p>
         ) : (
           <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
@@ -119,7 +119,7 @@ export default function Footer({ categories }) {
       </div>
 
       <div className="footer__base">
-        <span>© {new Date().getFullYear()} Deer</span>
+        <span>© {new Date().getFullYear()} Hidden Deer</span>
         <span className="footer__base-note">Pincode · Shipping · Returns</span>
       </div>
     </footer>

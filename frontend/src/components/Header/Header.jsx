@@ -45,8 +45,8 @@ export default function Header({ categories = [] }) {
           </button>
         </div>
 
-        <Link to="/" className="header__logo" aria-label="Deer home">
-          DEER
+        <Link to="/" className="header__logo" aria-label="Hidden Deer home">
+          HIDDEN DEER
         </Link>
 
         <div className="header__group header__group--right">

@@ -41,7 +41,7 @@ export default function AdminTopbar({ onMenuClick }) {
         </button>
 
         <div className="admin-topbar__title-wrap">
-          <p className="admin-topbar__eyebrow">DEER</p>
+          <p className="admin-topbar__eyebrow">HIDDEN DEER</p>
           <h1 className="admin-topbar__title">{currentTitle}</h1>
         </div>
       </div>

@@ -24,7 +24,7 @@ export default function TestPage() {
 
   return (
     <main className="test-page">
-      <h1>Deer Frontend is working</h1>
+      <h1>Hidden Deer Frontend is working</h1>
       <p>React + Vite + React Router + Axios are running.</p>
       <Link to="/">Back to home</Link>
 

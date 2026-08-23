@@ -3,10 +3,10 @@ import { gsap } from '../../lib/gsap';
 import useScrollLock from '../../hooks/useScrollLock';
 import './Loader.css';
 
-// Place the brand-logo animation at public/videos/deer-logo.mp4 (served at
-// /videos/deer-logo.mp4). A URL string (not an import) is intentional: the
+// Place the brand-logo animation at public/videos/hidden-deer-logo.mp4 (served at
+// /videos/hidden-deer-logo.mp4). A URL string (not an import) is intentional: the
 // build never fails while the video is not yet provided.
-const VIDEO_SRC = '/videos/deer-logo.mp4';
+const VIDEO_SRC = '/videos/hidden-deer-logo.mp4';
 
 // If the video errors, show the wordmark briefly and transition anyway.
 const ERROR_FALLBACK_MS = 1200;
@@ -90,7 +90,7 @@ export default function Loader({ onComplete }) {
         onError={handleVideoError}
         onLoadedData={handleVideoReady}
       />
-      {videoFailed && <span className="loader__fallback">DEER</span>}
+      {videoFailed && <span className="loader__fallback">HIDDEN DEER</span>}
     </div>
   );
 }

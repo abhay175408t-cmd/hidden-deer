@@ -1,4 +1,4 @@
-// Centralized DEER homepage campaign configuration.
+// Centralized HIDDEN DEER homepage campaign configuration.
 //
 // The backend has no homepage CMS/banner API yet, so campaign imagery lives
 // in the frontend asset system (public/assets/home/). Replace the asset files
@@ -164,5 +164,5 @@ export const fullWidthCampaign = {
   subtitle: 'The season sale is ending soon. New pieces at their best price.',
   cta: 'Shop the Sale',
   categorySlug: null, // null → routes to the full discovery page
-  alt: 'DEER season sale — up to 30% off',
+  alt: 'HIDDEN DEER season sale — up to 30% off',
 };

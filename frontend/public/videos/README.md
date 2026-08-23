@@ -1,10 +1,10 @@
 # Video assets
 
-Place the DEER brand-logo animation video at:
+Place the HIDDEN DEER brand-logo animation video at:
 
-    public/videos/deer-logo.mp4
+    public/videos/hidden-deer-logo.mp4
 
-It is served by Vite at `/videos/deer-logo.mp4` and referenced by
+It is served by Vite at `/videos/hidden-deer-logo.mp4` and referenced by
 `src/components/Loader/Loader.jsx` (const `VIDEO_SRC`).
 
 Requirements:
@@ -13,5 +13,5 @@ Requirements:
 - 16:9 or square; the loader uses `object-fit: contain`, so any aspect ratio
   will be preserved without distortion
 
-The loader falls back gracefully (DEER wordmark + timed transition) until the
+The loader falls back gracefully (HIDDEN DEER wordmark + timed transition) until the
 video is provided, so the website never blocks.

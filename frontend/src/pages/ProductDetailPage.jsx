@@ -160,7 +160,7 @@ export default function ProductDetailPage() {
                   className="product-detail__main-image"
                 />
               ) : (
-                <div className="product-detail__main-placeholder">DEER</div>
+                <div className="product-detail__main-placeholder">HIDDEN DEER</div>
               )}
             </div>
             {images.length > 1 && (
@@ -182,7 +182,7 @@ export default function ProductDetailPage() {
           </div>
 
           <div className="product-detail__info">
-            <p className="product-detail__brand">{product.brand || 'Deer'}</p>
+            <p className="product-detail__brand">{product.brand || 'Hidden Deer'}</p>
             <h1 className="product-detail__name">{product.name}</h1>
 
             {typeof product.rating === 'number' && product.rating > 0 && (

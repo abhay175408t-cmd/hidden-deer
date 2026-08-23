@@ -31,7 +31,7 @@ function CategoryCard({ category, eager }) {
 }
 
 /**
- * Featured categories — the signature DEER dual-image hover cards.
+ * Featured categories — the signature HIDDEN DEER dual-image hover cards.
  * Grid composed like an editorial catalog: first row leads with the first
  * two categories, remainder flows in a 4-column rhythm.
  */
@@ -88,7 +88,7 @@ export default function FeaturedCategories({ categories }) {
   return (
     <section className="fc" ref={rootRef} aria-labelledby="fc-title">
       <header className="fc__head">
-        <p className="fc__eyebrow">The Deer Edit</p>
+        <p className="fc__eyebrow">The Hidden Deer Edit</p>
         <h2 id="fc-title" className="fc__title">
           Featured Categories
         </h2>

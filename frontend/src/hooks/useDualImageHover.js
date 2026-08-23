@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { gsap } from '../lib/gsap';
 
 /**
- * Reusable dual-image hover animation (the signature DEER interaction).
+ * Reusable dual-image hover animation (the signature HIDDEN DEER interaction).
  *
  * IMAGE A (lifestyle/person) is shown by default. On hover it fades out with
  * a subtle scale while IMAGE B (clean product shot) fades in from a larger

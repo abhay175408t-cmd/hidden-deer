@@ -56,7 +56,7 @@ export default function CartPage() {
                   <img src={item.image} alt={item.name} loading="lazy" />
                 ) : (
                   <span className="cart-item__media-placeholder" aria-hidden="true">
-                    DEER
+                    HIDDEN DEER
                   </span>
                 )}
               </Link>

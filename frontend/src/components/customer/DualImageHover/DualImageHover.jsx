@@ -2,7 +2,7 @@ import useDualImageHover from '../../../hooks/useDualImageHover';
 import './DualImageHover.css';
 
 /**
- * The signature DEER media transition: a "person wearing" image by default,
+ * The signature HIDDEN DEER media transition: a "person wearing" image by default,
  * crossfading to a clean product-only image on hover (and back on leave).
  *
  * If `secondary` is not provided the component renders a plain single image
@@ -43,7 +43,7 @@ export default function DualImageHover({ primary, secondary, alt, eager = false,
         />
       ) : (
         <div ref={primaryRef} className="dual-image__layer dual-image__layer--primary dual-image__fallback">
-          DEER
+          HIDDEN DEER
         </div>
       )}
       {hasSecondary && (

@@ -14,7 +14,7 @@ export default function AdminPlaceholderPage() {
 
   return (
     <main className="admin-placeholder">
-      <span className="admin-placeholder__brand">DEER</span>
+      <span className="admin-placeholder__brand">HIDDEN DEER</span>
       <h1 className="admin-placeholder__title">
         Admin Dashboard — Coming in A2/A3
       </h1>

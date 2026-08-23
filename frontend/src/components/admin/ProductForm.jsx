@@ -529,7 +529,7 @@ function ProductForm({ initialValues, submitLabel, onSubmit, onCancel }) {
               type="text"
               value={form.brand}
               onChange={(e) => setField('brand', e.target.value)}
-              placeholder="e.g. DEER"
+              placeholder="e.g. HIDDEN DEER"
             />
           </div>
         </div>
@@ -583,7 +583,7 @@ function ProductForm({ initialValues, submitLabel, onSubmit, onCancel }) {
               type="text"
               value={form.sku}
               onChange={(e) => setField('sku', e.target.value)}
-              placeholder="e.g. DEER-LS-001"
+              placeholder="e.g. HD-LS-001"
             />
           </div>
 

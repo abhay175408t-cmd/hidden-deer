@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
     return (
       <main className="admin-login">
         <p className="admin-login__checking" role="status">
-          DEER — checking session…
+          HIDDEN DEER — checking session…
         </p>
       </main>
     );
@@ -92,14 +92,14 @@ export default function AdminLoginPage() {
         noValidate
         aria-label="Admin sign in"
       >
-        <Link to="/" className="admin-login__brand" aria-label="DEER — back to storefront">
-          DEER
+        <Link to="/" className="admin-login__brand" aria-label="Hidden Deer — back to storefront">
+          HIDDEN DEER
         </Link>
 
         <p className="admin-login__eyebrow">Admin</p>
         <h1 className="admin-login__title">Sign in</h1>
         <p className="admin-login__subtitle">
-          Restricted to Deer administrators.
+          Restricted to Hidden Deer administrators.
         </p>
 
         {bouncedNotice && (
@@ -124,7 +124,7 @@ export default function AdminLoginPage() {
             type="email"
             name="email"
             autoComplete="email"
-            placeholder="you@deer.com"
+            placeholder="you@hiddendeer.com"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required

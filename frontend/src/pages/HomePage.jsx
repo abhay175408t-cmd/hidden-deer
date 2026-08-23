@@ -12,7 +12,7 @@ import { filterFeaturedByBackend } from '../data/featuredCategories';
 import './HomePage.css';
 
 /**
- * DEER customer Discovery homepage.
+ * HIDDEN DEER customer Discovery homepage.
  *
  * Layout order: Editorial marquee → Featured categories → Campaign posters →
  * Full-width offer → New & Popular (with filters + scroll-based lazy loading).

@@ -24,7 +24,7 @@ export default function RequireAdmin() {
   if (loading) {
     return (
       <div className="admin-guard" role="status" aria-live="polite">
-        <span className="admin-guard__brand">DEER</span>
+        <span className="admin-guard__brand">HIDDEN DEER</span>
         <span className="admin-guard__message">Checking session…</span>
       </div>
     );
